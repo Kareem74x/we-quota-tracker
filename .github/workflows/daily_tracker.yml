@@ -28,7 +28,7 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
-          WE_USERNAME: ${{ secrets.WE_USERNAME }}
-          WE_PASSWORD: ${{ secrets.WE_PASSWORD }}
+          LND_NUMBER: ${{ secrets.LND_NUMBER }}
+          LND_PASS: ${{ secrets.LND_PASS }}
           START_GB: ${{ secrets.START_GB }}
         run: python main.py
