@@ -5,7 +5,8 @@ import os
 import requests
 from dotenv import load_dotenv
 import re
-import mysql.connector
+import psycopg2
+import psycopg2.extras
 import logging
 
 
@@ -20,31 +21,25 @@ def get_db_connection():
     logging.info("Connecting to database...")
 
     try:
-        conn = mysql.connector.connect(
-            host=os.getenv("DB_HOST"),
-            port=os.getenv("DB_PORT"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            database=os.getenv("DB_NAME")
-        )
+        conn = psycopg2.connect(os.getenv("DATABASE_URL"))
         logging.info("Connected successfully")
         return conn
 
     except Exception as e:
-        logging.error("Database connection failed. Please check your network and DB credentials in .env")
+        logging.error("Database connection failed. Please check your network and DATABASE_URL in .env")
         return None
 
 def ensure_table_exists(cursor):
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS quota_log (
-            id            INT AUTO_INCREMENT PRIMARY KEY,
-            date_time     DATETIME        NOT NULL,
+            id            SERIAL PRIMARY KEY,
+            date_time     TIMESTAMP       NOT NULL,
             day           INT,
-            usage_gbs     DECIMAL(10, 1),
-            remaining_gbs DECIMAL(10, 1),
+            usage_gbs     NUMERIC(10, 1),
+            remaining_gbs NUMERIC(10, 1),
             overall_state VARCHAR(50),
-            state_gbs     DECIMAL(10, 1),
-            state_days    DECIMAL(10, 1),
+            state_gbs     NUMERIC(10, 1),
+            state_days    NUMERIC(10, 1),
             remaining_days INT
         )
     """)
@@ -52,7 +47,7 @@ def ensure_table_exists(cursor):
 def write_to_db(now_datetime, currentDay, remainGB, overAllState, overAllStateGbs, stateDays, remainingDays):
     try:
         conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
         # TODO: replace this temporary solution with a more robust method for handling the start of a new cycle
         if currentDay == 1:
