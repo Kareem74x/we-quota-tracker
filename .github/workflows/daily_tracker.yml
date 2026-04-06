@@ -2,7 +2,7 @@ name: Daily Quota Tracker
 
 on:
   schedule:
-    - cron: '0 19 * * *'    # Runs every day at 9 PM Egypt time (may be 10 PM in summer)
+    - cron: '0 19 * * *'    # Runs  every day at 9 PM Egypt time (may be 10 PM in summer)
   workflow_dispatch:        # Allow manual runs
 
 jobs:
@@ -27,4 +27,4 @@ jobs:
           LND_NUMBER: ${{ secrets.LND_NUMBER }}
           LND_PASS: ${{ secrets.LND_PASS }}
           START_GB: ${{ secrets.START_GB }}
-        run: python main.py
+        run: python src/main.py
