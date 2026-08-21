@@ -21,6 +21,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Install Playwright browser
+        run: |
+          playwright install chromium
+          playwright install-deps
+
       - name: Run quota tracker
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
