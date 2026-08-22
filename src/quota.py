@@ -1,11 +1,11 @@
 import re
 from utils import tsConv
-
+from config import START_GB
 
 def calculate_quota(quota_body: dict) -> dict:
     """Parse raw quota API response and compute derived metrics."""
     offer_name = quota_body["offerName"]
-    total_gb = quota_body["total"]
+    total_gb = START_GB  # quota_body["total"]
     used_gb = quota_body["used"]
     remain_gb = quota_body["remain"]
     usage_prc = used_gb / total_gb * 100

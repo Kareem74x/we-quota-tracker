@@ -35,8 +35,7 @@ def main():
             f"*Quota Report — Day {q['current_day']}*\n"
             f"━━━━━━━━━━━━━━━━━━━━\n"
             f"*Usage Today:* {dailyUsage:.1f} GB\n"
-            f"*Remaining:* {q['remain_gb']:.1f} / {q['total_gb']} GB ({q['usage_prc']:.1f}% used)\n"
-            f"*Days Left:* {q['remaining_days']}\n"
+            f"*Remaining:* {q['remain_gb']:.1f} / {q['total_gb']} GB\n"
             f"*Overall State:* {q['overall_state']} by {q['overall_state_gbs']:.1f} GB ({q['state_days']:.1f} days)\n"
             f"━━━━━━━━━━━━━━━━━━━━"
         )
@@ -45,8 +44,7 @@ def main():
             logging.info("─── Quota Record Saved ───────────────────")
             logging.info("  Day            : %d", q["current_day"])
             logging.info("  Usage Today    : %.1f GB", dailyUsage)
-            logging.info("  Remaining      : %.1f / %s GB (%.1f%% used)", q["remain_gb"], q["total_gb"], q["usage_prc"])
-            logging.info("  Remaining Days : %d", q["remaining_days"])
+            logging.info("  Remaining      : %.1f / %s GB", q["remain_gb"], q["total_gb"])
             logging.info("  Overall State  : %s by %.1f GB (%.1f days)", q["overall_state"], q["overall_state_gbs"], q["state_days"])
             logging.info("──────────────────────────────────────────")
     else:
