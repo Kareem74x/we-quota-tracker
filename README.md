@@ -19,8 +19,8 @@ A Python automation tool that tracks your **WE (Telecom Egypt) home internet quo
 
 ## How it works
 
-1. Authenticates with the WE API using your landline credentials.
-2. Fetches your current quota details.
+1. Authenticates with the WE portal via browser automation (Playwright).
+2. Fetches your current quota details via API calls.
 3. Calculates your daily usage and whether you are over or under your expected overall usage.
 4. Logs a row to a PostgreSQL `quota_log` table.
 5. Sends a Telegram notification with your daily quota summary.
@@ -190,7 +190,10 @@ cd we-quota-tracker
 
 ```bash
 pip install -r requirements.txt
+playwright install chromium
 ```
+
+> **Linux users:** Run `playwright install-deps` after installing Chromium.
 
 **3. Create a `.env` file** in the project root with the following variables:
 
